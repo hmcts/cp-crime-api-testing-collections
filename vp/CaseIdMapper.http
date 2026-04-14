@@ -1,4 +1,6 @@
-### GET CaseIdMapper via Ingress (bypasses WAF + APIM)
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-caseadmin-case-urn-mapper — v1.0.8
+
+### GET Retrieve case ID by case URN via Ingress
 GET {{ingress_base_url}}/urnmapper/{{case_urn}}
 Authorization: Bearer {{access_token}}
 
