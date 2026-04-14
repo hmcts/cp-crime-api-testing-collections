@@ -1,13 +1,15 @@
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details — v1.0.1
+
 ### GET Crime Prosecution Case Details by URN via APIM
 GET {{apim_base_url}}/cases/{{case_urn}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{subscription_key}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 
 ###
 
 ### GET Crime Prosecution Case Details by URN via WAF
 GET {{waf_base_url}}/cases/{{case_urn}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{subscription_key}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 
 ###
