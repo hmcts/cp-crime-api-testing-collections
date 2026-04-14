@@ -51,10 +51,6 @@ Edit the copied file and replace the placeholders:
 | `client_id` | Entra ID client (app) ID |
 | `client_secret` | Entra ID client secret |
 
-### 3. TLS certificates (optional)
-
-If requests fail with TLS errors, place the APIM CA certificate at `certs/apim-ca.pem`. See `certs/README.txt` for details.
-
 ---
 
 ## Running requests
