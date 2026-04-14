@@ -1,0 +1,83 @@
+### Get list of valid event types via Ingress (bypasses WAF + APIM)
+GET {{ingress_base_url}}/event-types
+Authorization: Bearer {{access_token}}
+
+###
+
+### Create a new client subscription via Ingress (bypasses WAF + APIM)
+POST {{ingress_base_url}}/client-subscriptions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "notificationEndpoint": {
+    "callbackUrl": "https://client.example.com/events"
+  },
+  "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
+}
+
+###
+
+### Get a client subscription by ID via Ingress (bypasses WAF + APIM)
+GET {{ingress_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Update a client subscription by ID via Ingress (bypasses WAF + APIM)
+PUT {{ingress_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "notificationEndpoint": {
+    "callbackUrl": "https://client.example.com/new-hook"
+  },
+  "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
+}
+
+###
+
+### Delete a client subscription by ID via Ingress (bypasses WAF + APIM)
+DELETE {{ingress_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Create a notification (Internal) via Ingress (bypasses WAF + APIM)
+POST {{ingress_base_url}}/notifications
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "eventId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "materialId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "PRISON_COURT_REGISTER_GENERATED",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "defendant": {
+    "masterDefendantId": "8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111",
+    "name": "John Doe",
+    "dateOfBirth": "1990-05-15",
+    "custodyEstablishmentDetails": {
+      "emailAddress": "prison@moj.gov.uk"
+    },
+    "cases": [
+      { "urn": "CT98KRYCAP" },
+      { "urn": "AB75123123" }
+    ]
+  }
+}
+
+###
+
+### Get PDF document for a subscription via Ingress (bypasses WAF + APIM)
+GET {{ingress_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
+Authorization: Bearer {{access_token}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###

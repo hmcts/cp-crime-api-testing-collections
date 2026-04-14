@@ -1,0 +1,189 @@
+### Get list of valid event types via WAF
+GET {{waf_base_url}}/event-types
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+
+###
+
+### Get list of valid event types via APIM
+GET {{apim_base_url}}/event-types
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+
+###
+
+### Create a new client subscription via WAF
+POST {{waf_base_url}}/client-subscriptions
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "notificationEndpoint": {
+    "callbackUrl": "https://client.example.com/events"
+  },
+  "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
+}
+
+###
+
+### Create a new client subscription via APIM
+POST {{apim_base_url}}/client-subscriptions
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "notificationEndpoint": {
+    "callbackUrl": "https://client.example.com/events"
+  },
+  "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
+}
+
+###
+
+### Get a client subscription by ID via WAF
+GET {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Get a client subscription by ID via APIM
+GET {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Update a client subscription by ID via WAF
+PUT {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "notificationEndpoint": {
+    "callbackUrl": "https://client.example.com/new-hook"
+  },
+  "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
+}
+
+###
+
+### Update a client subscription by ID via APIM
+PUT {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "notificationEndpoint": {
+    "callbackUrl": "https://client.example.com/new-hook"
+  },
+  "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
+}
+
+###
+
+### Delete a client subscription by ID via WAF
+DELETE {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Delete a client subscription by ID via APIM
+DELETE {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Create a notification (Internal) via WAF
+POST {{waf_base_url}}/notifications
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "eventId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "materialId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "PRISON_COURT_REGISTER_GENERATED",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "defendant": {
+    "masterDefendantId": "8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111",
+    "name": "John Doe",
+    "dateOfBirth": "1990-05-15",
+    "custodyEstablishmentDetails": {
+      "emailAddress": "prison@moj.gov.uk"
+    },
+    "cases": [
+      { "urn": "CT98KRYCAP" },
+      { "urn": "AB75123123" }
+    ]
+  }
+}
+> {%
+client.global.set("document_id", response.body.documentId);
+client.log("document_id stored: " + response.body.documentId);
+%}
+
+###
+
+### Create a notification (Internal) via APIM
+POST {{apim_base_url}}/notifications
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "eventId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "materialId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "PRISON_COURT_REGISTER_GENERATED",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "defendant": {
+    "masterDefendantId": "8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111",
+    "name": "John Doe",
+    "dateOfBirth": "1990-05-15",
+    "custodyEstablishmentDetails": {
+      "emailAddress": "prison@moj.gov.uk"
+    },
+    "cases": [
+      { "urn": "CT98KRYCAP" },
+      { "urn": "AB75123123" }
+    ]
+  }
+}
+> {%
+client.global.set("document_id", response.body.documentId);
+client.log("document_id stored: " + response.body.documentId);
+%}
+
+###
+
+### Get PDF document for a subscription via WAF
+GET {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### Get PDF document for a subscription via APIM
+GET {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{subscription_key}}
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###

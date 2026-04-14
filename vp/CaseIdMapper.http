@@ -1,0 +1,5 @@
+### GET CaseIdMapper via Ingress (bypasses WAF + APIM)
+GET {{ingress_base_url}}/urnmapper/{{case_urn}}
+Authorization: Bearer {{access_token}}
+
+###

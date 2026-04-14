@@ -1,0 +1,11 @@
+### Get Entra Access Token (Client Credentials)
+POST https://login.microsoftonline.com/{{tenant_id}}/oauth2/v2.0/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{client_id}}&client_secret={{client_secret}}&scope={{scope}}&grant_type=client_credentials
+> {%
+client.global.set("access_token", response.body.access_token);
+client.log("Access token stored: " + response.body.access_token.substring(0, 20) + "...");
+%}
+
+###
