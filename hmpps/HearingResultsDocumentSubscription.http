@@ -3,21 +3,21 @@
 ### Get list of valid event types via WAF
 GET {{waf_base_url}}/event-types
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 
 ###
 
 ### Get list of valid event types via APIM
 GET {{apim_base_url}}/event-types
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 
 ###
 
 ### Create a new client subscription via WAF
 POST {{waf_base_url}}/client-subscriptions
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -33,7 +33,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Create a new client subscription via APIM
 POST {{apim_base_url}}/client-subscriptions
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -49,7 +49,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Get a client subscription by ID via WAF
 GET {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
@@ -57,7 +57,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Get a client subscription by ID via APIM
 GET {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
@@ -65,7 +65,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Update a client subscription by ID via WAF
 PUT {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -81,7 +81,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Update a client subscription by ID via APIM
 PUT {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -97,7 +97,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Delete a client subscription by ID via WAF
 DELETE {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
@@ -105,7 +105,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Delete a client subscription by ID via APIM
 DELETE {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
@@ -113,7 +113,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Create a notification (Internal) via WAF
 POST {{waf_base_url}}/notifications
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -145,7 +145,7 @@ client.log("document_id stored: " + response.body.documentId);
 ### Create a notification (Internal) via APIM
 POST {{apim_base_url}}/notifications
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -177,7 +177,7 @@ client.log("document_id stored: " + response.body.documentId);
 ### Get PDF document for a subscription via WAF
 GET {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
@@ -185,7 +185,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 ### Get PDF document for a subscription via APIM
 GET {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
 Authorization: Bearer {{access_token}}
-Ocp-Apim-Subscription-Key: {{hmpp_subscription_key}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
