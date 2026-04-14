@@ -6,9 +6,9 @@ IntelliJ HTTP Client collections for manual and exploratory testing of CP Crime 
 
 | Folder | File | Description |
 |--------|------|-------------|
-| `hmpp/` | `HearingResultsDocumentSubscription.http` | HRDS subscription and document APIs via APIM |
-| `hmpp/` | `HearingResultsDocumentSubscription-ingress.http` | HRDS APIs called directly via ingress |
-| `hmpp/` | `Entra.http` | Obtain an Entra ID access token for HMPP |
+| `hmpps/` | `HearingResultsDocumentSubscription.http` | HRDS subscription and document APIs via APIM |
+| `hmpps/` | `HearingResultsDocumentSubscription-ingress.http` | HRDS APIs called directly via ingress |
+| `hmpps/` | `Entra.http` | Obtain an Entra ID access token for HMPPS |
 | `vp/` | `CrimeProsecutionCaseDetails.http` | Prosecution case detail queries |
 | `vp/` | `CaseIdMapper.http` | Case ID mapping lookups |
 | `vp/` | `CourtSchedule.http` | Court schedule lookup by case URN |
@@ -43,7 +43,7 @@ Generates or updates an IntelliJ HTTP Client collection from a SwaggerHub spec.
 
 ```
 /swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details
-/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription hmpp/
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription hmpps/
 ```
 
 - Accepts a URL with or without a version — if no version is given, the latest is resolved automatically
@@ -51,15 +51,14 @@ Generates or updates an IntelliJ HTTP Client collection from a SwaggerHub spec.
 
 ### `/create-pr`
 
-Raises a GitHub PR with a structured description and posts the PR link as a comment on the JIRA ticket.
+Commits and pushes changes directly to `main`.
 
 ```
 /create-pr
 ```
 
 - Checks all HTTP collections are in sync with their Swagger specs by comparing the `# Spec:` version in each `.http` file against the latest on SwaggerHub
-- Extracts the JIRA ticket from the branch name and links it in the PR body
-- Optionally creates a Confluence release page when shipping to SIT
+- Stages, commits, and pushes to `main` — no branches or PRs
 
 ---
 
