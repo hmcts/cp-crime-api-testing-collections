@@ -11,6 +11,7 @@ IntelliJ HTTP Client collections for manual and exploratory testing of CP Crime 
 | `hmpp/` | `Entra.http` | Obtain an Entra ID access token for HMPP |
 | `vp/` | `CrimeProsecutionCaseDetails.http` | Prosecution case detail queries |
 | `vp/` | `CaseIdMapper.http` | Case ID mapping lookups |
+| `vp/` | `CourtSchedule.http` | Court schedule lookup by case URN |
 | `vp/` | `Entra.http` | Obtain an Entra ID access token for VP |
 
 ---
