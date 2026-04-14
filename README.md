@@ -12,6 +12,7 @@ IntelliJ HTTP Client collections for manual and exploratory testing of CP Crime 
 | `vp/` | `CrimeProsecutionCaseDetails.http` | Prosecution case detail queries |
 | `vp/` | `CaseIdMapper.http` | Case ID mapping lookups |
 | `vp/` | `CourtSchedule.http` | Court schedule lookup by case URN |
+| `vp/` | `Courthouses.http` | Court house lookup by court ID and court room ID |
 | `vp/` | `Entra.http` | Obtain an Entra ID access token for VP |
 
 ---
