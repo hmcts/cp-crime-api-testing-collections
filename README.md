@@ -58,7 +58,7 @@ Commits and pushes changes directly to `main`.
 ```
 
 - Checks all HTTP collections are in sync with their Swagger specs by comparing the `# Spec:` version in each `.http` file against the latest on SwaggerHub
-- Stages, commits, and pushes to `main` — no branches or PRs
+- Stages, commits, and pushes directly to `main`
 
 ---
 
