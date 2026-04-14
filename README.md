@@ -71,12 +71,12 @@ This repo includes two [Claude Code](https://claude.ai/claude-code) skills in `.
 Generates or updates an IntelliJ HTTP Client collection from a SwaggerHub spec.
 
 ```
-/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-foo
-/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-foo/1.2.0 vp/
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription hmpp/
 ```
 
 - Accepts a URL with or without a version — if no version is given, the latest is resolved automatically
-- Creates the `.http` file, updates `http-client.env.json`, `swagger-specs.json`, and `README.md`
+- Creates the `.http` file, updates `http-client.env.json` and `README.md`
 
 ### `/create-pr`
 
@@ -86,7 +86,7 @@ Raises a GitHub PR with a structured description and posts the PR link as a comm
 /create-pr
 ```
 
-- Checks all HTTP collections are in sync with their Swagger specs before raising the PR (`swagger-specs.json`)
+- Checks all HTTP collections are in sync with their Swagger specs by comparing the `# Spec:` version in each `.http` file against the latest on SwaggerHub
 - Extracts the JIRA ticket from the branch name and links it in the PR body
 - Optionally creates a Confluence release page when shipping to SIT
 
