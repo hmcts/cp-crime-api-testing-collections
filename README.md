@@ -25,22 +25,19 @@ Each folder contains an `http-client.env.json` with non-sensitive base URLs, ten
 
 ### 2. Private credentials (`http-client.private.env.json`)
 
-Copy the sample and fill in your credentials — this file is git-ignored and must never be committed.
+There is **one** private credentials file at the repo root. Create it (it is git-ignored and must never be committed):
 
 ```bash
-# HMPP
-cp hmpp/http-client.private.env.json.sample hmpp/http-client.private.env.json
-
-# VP
-cp vp/http-client.private.env.json.sample vp/http-client.private.env.json
+touch http-client.private.env.json
 ```
 
-Edit the copied file and replace the placeholders:
+Populate it with your credentials:
 
 ```json
 {
   "dev": {
-    "subscription_key": "<your-apim-subscription-key>",
+    "vp_subscription_key": "<your-vp-apim-subscription-key>",
+    "hmpp_subscription_key": "<your-hmpp-apim-subscription-key>",
     "client_id": "<your-client-id>",
     "client_secret": "<your-client-secret>"
   }
@@ -49,7 +46,8 @@ Edit the copied file and replace the placeholders:
 
 | Variable | Description |
 |----------|-------------|
-| `subscription_key` | APIM subscription key (`Ocp-Apim-Subscription-Key`) |
+| `vp_subscription_key` | APIM subscription key for VP APIs (`Ocp-Apim-Subscription-Key`) |
+| `hmpp_subscription_key` | APIM subscription key for HMPP APIs (`Ocp-Apim-Subscription-Key`) |
 | `client_id` | Entra ID client (app) ID |
 | `client_secret` | Entra ID client secret |
 
@@ -61,6 +59,36 @@ Edit the copied file and replace the placeholders:
 2. Select the environment (`dev`, `sit`, etc.) from the environment dropdown in the top-right of the editor.
 3. Run `Entra.http` first to obtain an access token — subsequent requests use the token automatically via environment variable chaining.
 4. Run the desired request.
+
+---
+
+## Claude Code Skills
+
+This repo includes two [Claude Code](https://claude.ai/claude-code) skills in `.claude/skills/` for automating common tasks.
+
+### `/swagger-to-http`
+
+Generates or updates an IntelliJ HTTP Client collection from a SwaggerHub spec.
+
+```
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription hmpp/
+```
+
+- Accepts a URL with or without a version — if no version is given, the latest is resolved automatically
+- Creates the `.http` file, updates `http-client.env.json` and `README.md`
+
+### `/create-pr`
+
+Raises a GitHub PR with a structured description and posts the PR link as a comment on the JIRA ticket.
+
+```
+/create-pr
+```
+
+- Checks all HTTP collections are in sync with their Swagger specs by comparing the `# Spec:` version in each `.http` file against the latest on SwaggerHub
+- Extracts the JIRA ticket from the branch name and links it in the PR body
+- Optionally creates a Confluence release page when shipping to SIT
 
 ---
 
