@@ -23,35 +23,6 @@ IntelliJ HTTP Client collections for manual and exploratory testing of CP Crime 
 
 Each folder contains an `http-client.env.json` with non-sensitive base URLs, tenant IDs, and scopes pre-filled for `dev`, `sit`, `preprod`, and `prod`. No changes needed for `dev`.
 
-### 2. Private credentials (`http-client.private.env.json`)
-
-There is **one** private credentials file at the repo root. Create it (it is git-ignored and must never be committed):
-
-```bash
-touch http-client.private.env.json
-```
-
-Populate it with your credentials:
-
-```json
-{
-  "dev": {
-    "vp_subscription_key": "<your-vp-apim-subscription-key>",
-    "hmpp_subscription_key": "<your-hmpp-apim-subscription-key>",
-    "client_id": "<your-client-id>",
-    "client_secret": "<your-client-secret>"
-  }
-}
-```
-
-| Variable | Description |
-|----------|-------------|
-| `vp_subscription_key` | APIM subscription key for VP APIs (`Ocp-Apim-Subscription-Key`) |
-| `hmpp_subscription_key` | APIM subscription key for HMPP APIs (`Ocp-Apim-Subscription-Key`) |
-| `client_id` | Entra ID client (app) ID |
-| `client_secret` | Entra ID client secret |
-
----
 
 ## Running requests
 
