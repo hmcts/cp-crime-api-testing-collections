@@ -21,8 +21,20 @@ IntelliJ HTTP Client collections for manual and exploratory testing of CP Crime 
 
 ### 1. Environment config (`http-client.env.json`)
 
-Each folder contains an `http-client.env.json` with non-sensitive base URLs, tenant IDs, and scopes pre-filled for `dev`, `sit`, `preprod`, and `prod`. No changes needed for `dev`.
+Each folder contains an `http-client.env.json` with placeholder values for base URLs, tenant IDs, and scopes across `dev`, `sit`, `preprod`, and `prod`. This file is tracked in git — do not put real credentials here.
 
+### 2. Private credentials (`http-client.private.env.json`)
+
+Each folder also expects an `http-client.private.env.json` with your real values. This file is gitignored and never committed.
+
+Copy the template from the corresponding `http-client.env.json` and fill in the real values:
+
+```
+hmpps/http-client.private.env.json   ← HMPPS credentials (apim_base_url, ingress_base_url, subscription key, client ID/secret, etc.)
+vp/http-client.private.env.json      ← VP credentials (waf_base_url, apim_base_url, subscription key, client ID/secret, etc.)
+```
+
+IntelliJ merges both files automatically — private values take precedence over the shared env file.
 
 ## Running requests
 
@@ -43,6 +55,8 @@ Generates or updates an IntelliJ HTTP Client collection from a SwaggerHub spec.
 
 ```
 /swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule
+/swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-refdata-courthearing-courthouses
 /swagger-to-http https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription hmpps/
 ```
 

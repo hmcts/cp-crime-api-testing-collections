@@ -1,6 +1,6 @@
-### Get court schedule by case URN via WAF
-# Retrieve details of a court schedule by case URN
 # Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule — v1.1.0
+
+### Get court schedule by case URN via WAF
 GET {{waf_base_url}}/case/{{case_urn}}/courtschedule
 Authorization: Bearer {{access_token}}
 Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
