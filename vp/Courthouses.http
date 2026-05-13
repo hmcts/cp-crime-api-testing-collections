@@ -1,6 +1,6 @@
-### Get court house by court ID
-# Retrieve details of a court house by court_id
 # Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-refdata-courthearing-courthouses — v1.1.0
+
+### Get court house by court ID
 GET {{courthouses_base_url}}/courthouses/{{court_id}}
 Authorization: Bearer {{access_token}}
 Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
