@@ -1,4 +1,4 @@
-# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription — v2.0.5
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription — v2.0.9
 
 ### Get list of valid event types via WAF
 GET {{waf_base_url}}/event-types
@@ -107,6 +107,32 @@ DELETE {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{access_token}}
 Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+###
+
+### POST Rotate the HMAC signing secret for a subscription via WAF
+POST {{waf_base_url}}/client-subscriptions/{{client_subscription_id}}/secret/rotate
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "keyId": "{{key_id}}"
+}
+
+###
+
+### POST Rotate the HMAC signing secret for a subscription via APIM
+POST {{apim_base_url}}/client-subscriptions/{{client_subscription_id}}/secret/rotate
+Authorization: Bearer {{access_token}}
+Ocp-Apim-Subscription-Key: {{hmpps_subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "keyId": "{{key_id}}"
+}
 
 ###
 
