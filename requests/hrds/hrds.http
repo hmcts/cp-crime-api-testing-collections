@@ -1,12 +1,16 @@
 # CP Crime — Hearing Results Document Subscription (HRDS) APIs
-# Spec: api-cp-crime-hearing-results-document-subscription — v2.0.9
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription — v2.0.9
 #
 # Works in: IntelliJ HTTP Client · VS Code REST Client · httpyac CLI
-# Select environment: hrds-dev | hrds-sit | hrds-preprod | hrds-prod
-# Switch WAF vs APIM: the environment profile sets hrds_base_url accordingly.
+# Select environment: hrds-dev | hrds-dev-apim | hrds-sit | hrds-sit-apim | hrds-preprod | hrds-prod
 #
-# 1. Send "Get HRDS Token" (and "Get SLC Token" if testing court schedule).
-# 2. Send any API request — tokens and IDs chain automatically.
+# 1. Run "Get Entra Access Token — HRDS scope" first (and SLC token if testing court schedule).
+# 2. Run any request below — token is resolved automatically.
+
+# VS Code: resolves token from the named request response below
+@hrds_access_token = {{getHrdsToken.response.body.$.access_token}}
+@slc_access_token = {{getSlcToken.response.body.$.access_token}}
+@client_subscription_id = {{createSubscription.response.body.$.subscriptionId}}
 
 # @name getHrdsToken
 ### Get Entra Access Token — HRDS scope
@@ -14,6 +18,10 @@ POST https://login.microsoftonline.com/{{tenant_id}}/oauth2/v2.0/token
 Content-Type: application/x-www-form-urlencoded
 
 client_id={{client_id}}&client_secret={{client_secret}}&scope={{scope}}&grant_type=client_credentials
+
+> {%
+    client.global.set("hrds_access_token", response.body.access_token);
+%}
 
 ###
 
@@ -24,13 +32,17 @@ Content-Type: application/x-www-form-urlencoded
 
 client_id={{client_id}}&client_secret={{client_secret}}&scope={{slc_scope}}&grant_type=client_credentials
 
+> {%
+    client.global.set("slc_access_token", response.body.access_token);
+%}
+
 ###
 
 # ─── Event Types ────────────────────────────────────────────────────────────────
 
 ### Get list of valid event types
 GET {{hrds_base_url}}/event-types
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 
 ###
@@ -41,7 +53,7 @@ Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 ### Create a new client subscription
 # On 409 "already exists": copy the UUID from the error and set client_subscription_id in your env file.
 POST {{hrds_base_url}}/client-subscriptions
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
@@ -53,11 +65,20 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
   "eventTypes": ["PRISON_COURT_REGISTER_GENERATED"]
 }
 
+> {%
+    var subId = response.body.subscriptionId;
+    if (!subId) {
+        var match = (response.body.message || "").match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
+        if (match) subId = match[0];
+    }
+    if (subId) client.global.set("client_subscription_id", subId);
+%}
+
 ###
 
 ### Get a client subscription by ID
 GET {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -65,7 +86,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ### Update a client subscription by ID
 PUT {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
@@ -81,7 +102,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ### Delete a client subscription by ID
 DELETE {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -89,7 +110,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ### Rotate the HMAC signing secret for a subscription
 POST {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}/secret/rotate
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
@@ -105,7 +126,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 # @name createNotification
 ### Create a notification (Internal — triggers document generation)
 POST {{hrds_base_url}}/notifications
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 Content-Type: application/json
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
@@ -129,12 +150,16 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
   }
 }
 
+> {%
+    client.global.set("document_id", response.body.documentId);
+%}
+
 ###
 
 ### Get PDF document for a subscription
-# document_id resolved from createNotification response; falls back to env value.
-GET {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{createNotification.response.body.$.documentId}}
-Authorization: Bearer {{getHrdsToken.response.body.$.access_token}}
+# document_id auto-populated from createNotification above; or set document_id in your env file.
+GET {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
+Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
 X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
@@ -144,7 +169,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ### Get court schedule by case URN via SLC APIM
 GET {{court_schedule_hrds_apim_base_url}}/case/{{case_urn}}/courtschedule
-Authorization: Bearer {{getSlcToken.response.body.$.access_token}}
+Authorization: Bearer {{slc_access_token}}
 Ocp-Apim-Subscription-Key: {{slc_subscription_key}}
 
 ###
