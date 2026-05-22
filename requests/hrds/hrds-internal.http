@@ -1,0 +1,53 @@
+# CP Crime — HRDS Internal Endpoints
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription — v2.0.9
+#
+# ⚠  INTERNAL USE ONLY — these endpoints trigger upstream workflows and should NOT
+#    be run as part of normal API testing. They exist for local integration testing
+#    when the upstream event pipeline is not available.
+#
+# Works in: IntelliJ HTTP Client · VS Code REST Client · httpyac CLI
+# Select environment: hrds-dev | hrds-sit | hrds-preprod | hrds-prod
+#
+# Prerequisites:
+#   1. Run "Get Entra Access Token" in hrds.http first (sets hrds_access_token globally).
+#   2. Run "Create a client subscription" in hrds.http (sets client_subscription_id globally),
+#      or set client_subscription_id manually in your env file.
+
+# VS Code: resolves token from hrds.http named request
+@hrds_access_token = {{getHrdsToken.response.body.$.access_token}}
+
+###
+
+# ─── Notifications ──────────────────────────────────────────────────────────────
+# POST /notifications triggers document generation and delivers a webhook to the
+# registered callbackUrl. Returns HTTP 202 (empty body) — document_id is NOT
+# available from the response; it arrives via the webhook callback.
+
+# @name createNotification
+### Create a notification (triggers document generation)
+POST {{hrds_base_url}}/notifications
+Authorization: Bearer {{hrds_access_token}}
+Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
+Content-Type: application/json
+X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
+
+{
+  "eventId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "materialId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "PRISON_COURT_REGISTER_GENERATED",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "defendant": {
+    "masterDefendantId": "8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111",
+    "name": "John Doe",
+    "dateOfBirth": "1990-05-15",
+    "custodyEstablishmentDetails": {
+      "emailAddress": "prison@moj.gov.uk"
+    },
+    "cases": [
+      { "urn": "CT98KRYCAP" },
+      { "urn": "AB75123123" }
+    ]
+  }
+}
+
+###

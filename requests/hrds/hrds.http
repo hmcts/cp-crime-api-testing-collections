@@ -10,7 +10,7 @@
 # VS Code: resolves token from the named request response below
 @hrds_access_token = {{getHrdsToken.response.body.$.access_token}}
 @slc_access_token = {{getSlcToken.response.body.$.access_token}}
-@client_subscription_id = {{createSubscription.response.body.$.subscriptionId}}
+@client_subscription_id = {{createSubscription.response.body.$.clientSubscriptionId}}
 
 # @name getHrdsToken
 ### Get Entra Access Token — HRDS scope
@@ -66,7 +66,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 }
 
 > {%
-    var subId = response.body.subscriptionId;
+    var subId = response.body.clientSubscriptionId;
     if (!subId) {
         var match = (response.body.message || "").match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
         if (match) subId = match[0];
@@ -121,43 +121,12 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
 
-# ─── Notifications ──────────────────────────────────────────────────────────────
-
-# @name createNotification
-### Create a notification (Internal — triggers document generation)
-POST {{hrds_base_url}}/notifications
-Authorization: Bearer {{hrds_access_token}}
-Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
-Content-Type: application/json
-X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
-
-{
-  "eventId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "materialId": "123e4567-e89b-12d3-a456-426614174000",
-  "eventType": "PRISON_COURT_REGISTER_GENERATED",
-  "timestamp": "2024-01-15T10:30:00Z",
-  "defendant": {
-    "masterDefendantId": "8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111",
-    "name": "John Doe",
-    "dateOfBirth": "1990-05-15",
-    "custodyEstablishmentDetails": {
-      "emailAddress": "prison@moj.gov.uk"
-    },
-    "cases": [
-      { "urn": "CT98KRYCAP" },
-      { "urn": "AB75123123" }
-    ]
-  }
-}
-
-> {%
-    client.global.set("document_id", response.body.documentId);
-%}
-
-###
+# ─── Documents ──────────────────────────────────────────────────────────────────
+# document_id is returned via the webhook callback after a notification is processed.
+# Set document_id in your env file (http-client.private.env.json) before running this.
+# To trigger a notification manually, use hrds-internal.http (internal use only).
 
 ### Get PDF document for a subscription
-# document_id auto-populated from createNotification above; or set document_id in your env file.
 GET {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
 Authorization: Bearer {{hrds_access_token}}
 Ocp-Apim-Subscription-Key: {{hrds_subscription_key}}
