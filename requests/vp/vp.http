@@ -1,10 +1,11 @@
 # CP Crime — Victim Portal APIs
 #
 # Works in: IntelliJ HTTP Client · VS Code REST Client · httpyac CLI
-# Select environment: vp-dev | vp-sit | vp-preprod | vp-prod
+# Select environment: vp-dev | vp-dev-apim | vp-sit | vp-sit-apim | vp-preprod | vp-preprod-apim | vp-prod | vp-prod-apim
 #
 # 1. Run "Get Entra Access Token" first.
 # 2. Run any request below — token is resolved automatically.
+# 3. Switch between WAF and APIM by selecting the matching env profile (e.g. vp-dev vs vp-dev-apim).
 
 # VS Code: resolves token from the named request response below
 @vp_access_token = {{getToken.response.body.$.access_token}}
@@ -25,17 +26,9 @@ client_id={{client_id}}&client_secret={{client_secret}}&scope={{scope}}&grant_ty
 # ─── Crime Prosecution Case Details ────────────────────────────────────────────
 # Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details — v1.0.1
 
-# @name getCaseDetailsWaf
-### GET Case Details by URN via WAF
-GET {{waf_base_url}}/cases/{{case_urn}}
-Authorization: Bearer {{vp_access_token}}
-Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
-
-###
-
-# @name getCaseDetailsApim
-### GET Case Details by URN via APIM
-GET {{apim_base_url}}/cases/{{case_urn}}
+# @name getCaseDetails
+### GET Case Details by URN
+GET {{vp_base_url}}/cases/{{case_urn}}
 Authorization: Bearer {{vp_access_token}}
 Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 
@@ -44,17 +37,9 @@ Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 # ─── Court Schedule ─────────────────────────────────────────────────────────────
 # Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule — v1.1.0
 
-# @name getCourtScheduleWaf
-### Get court schedule by case URN via WAF
-GET {{waf_base_url}}/case/{{case_urn}}/courtschedule
-Authorization: Bearer {{vp_access_token}}
-Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
-
-###
-
-# @name getCourtScheduleApim
-### Get court schedule by case URN via APIM
-GET {{court_schedule_base_url}}/case/{{case_urn}}/courtschedule
+# @name getCourtSchedule
+### Get court schedule by case URN
+GET {{vp_base_url}}/case/{{case_urn}}/courtschedule
 Authorization: Bearer {{vp_access_token}}
 Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 
