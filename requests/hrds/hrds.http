@@ -40,6 +40,7 @@ client_id={{client_id}}&client_secret={{client_secret}}&scope={{slc_scope}}&gran
 
 # ─── Event Types ────────────────────────────────────────────────────────────────
 
+# @name getEventTypes
 ### Get list of valid event types
 GET {{hrds_base_url}}/event-types
 Authorization: Bearer {{hrds_access_token}}
@@ -76,6 +77,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
 
+# @name getSubscription
 ### Get a client subscription by ID
 GET {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{hrds_access_token}}
@@ -84,6 +86,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
 
+# @name updateSubscription
 ### Update a client subscription by ID
 PUT {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{hrds_access_token}}
@@ -100,6 +103,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
 
+# @name deleteSubscription
 ### Delete a client subscription by ID
 DELETE {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}
 Authorization: Bearer {{hrds_access_token}}
@@ -108,6 +112,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 ###
 
+# @name rotateSecret
 ### Rotate the HMAC signing secret for a subscription
 POST {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}/secret/rotate
 Authorization: Bearer {{hrds_access_token}}
@@ -126,6 +131,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 # Set document_id in your env file (http-client.private.env.json) before running this.
 # To trigger a notification manually, use hrds-internal.http (internal use only).
 
+# @name getDocument
 ### Get PDF document for a subscription
 GET {{hrds_base_url}}/client-subscriptions/{{client_subscription_id}}/documents/{{document_id}}
 Authorization: Bearer {{hrds_access_token}}
@@ -136,6 +142,7 @@ X-Correlation-Id: d679fd61-061f-4440-9623-36280f0807b7
 
 # ─── Court Schedule (via SLC APIM) ─────────────────────────────────────────────
 
+# @name getCourtScheduleSlc
 ### Get court schedule by case URN via SLC APIM
 GET {{court_schedule_hrds_apim_base_url}}/case/{{case_urn}}/courtschedule
 Authorization: Bearer {{slc_access_token}}
