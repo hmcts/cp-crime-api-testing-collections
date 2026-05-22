@@ -1,0 +1,4 @@
+# git-crypt: encrypt the private env file so it can be safely committed.
+# Setup (once per repo): git-crypt init && git-crypt export-key amp.team.key
+# Setup (once per dev):  git-crypt unlock amp.team.key
+http-client.private.env.json filter=git-crypt diff=git-crypt

@@ -1,0 +1,15 @@
+{
+  "provider": "swaggerhub",
+  "swaggerhub": {
+    "owner": "HMCTS-DTS"
+  },
+  "collections": {
+    "requests/hrds/hrds.http": "https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription",
+    "requests/vp/vp.http": [
+      "https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details",
+      "https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule",
+      "https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-refdata-courthearing-courthouses",
+      "https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-caseadmin-case-urn-mapper"
+    ]
+  }
+}

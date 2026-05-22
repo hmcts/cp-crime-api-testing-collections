@@ -1,0 +1,76 @@
+# CP Crime — Victim Portal APIs
+#
+# Works in: IntelliJ HTTP Client · VS Code REST Client · httpyac CLI
+# Select environment: vp-dev | vp-sit | vp-preprod | vp-prod
+#
+# 1. Send "Get Entra Access Token" — token chains automatically into all requests below.
+# 2. Send any API request.
+
+# @name getToken
+### Get Entra Access Token (Client Credentials)
+POST https://login.microsoftonline.com/{{tenant_id}}/oauth2/v2.0/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{client_id}}&client_secret={{client_secret}}&scope={{scope}}&grant_type=client_credentials
+
+###
+
+# ─── Crime Prosecution Case Details ────────────────────────────────────────────
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details — v1.0.1
+
+### GET Case Details by URN via WAF
+GET {{waf_base_url}}/cases/{{case_urn}}
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
+
+###
+
+### GET Case Details by URN via APIM
+GET {{apim_base_url}}/cases/{{case_urn}}
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
+
+###
+
+# ─── Court Schedule ─────────────────────────────────────────────────────────────
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule — v1.1.0
+
+### Get court schedule by case URN via WAF
+GET {{waf_base_url}}/case/{{case_urn}}/courtschedule
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
+
+###
+
+### Get court schedule by case URN via APIM
+GET {{court_schedule_base_url}}/case/{{case_urn}}/courtschedule
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
+
+###
+
+# ─── Case ID Mapper ─────────────────────────────────────────────────────────────
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-caseadmin-case-urn-mapper — v1.0.9
+
+### GET Case ID by URN via Ingress
+GET {{ingress_base_url}}/urnmapper/{{case_urn}}
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+
+###
+
+# ─── Courthouses ────────────────────────────────────────────────────────────────
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-refdata-courthearing-courthouses — v1.1.0
+
+### Get courthouse by court ID
+GET {{courthouses_base_url}}/courthouses/{{court_id}}
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
+
+###
+
+### Get courthouse and specific court room
+GET {{courthouses_base_url}}/courthouses/{{court_id}}/courtrooms/{{court_room_id}}
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
+
+###
