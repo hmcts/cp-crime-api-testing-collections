@@ -1,5 +1,5 @@
 # CP Crime — Hearing Results Document Subscription (HRDS) APIs
-# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription — v2.0.9
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-hearing-results-document-subscription — v2.0.2
 #
 # Works in: IntelliJ HTTP Client · VS Code REST Client · httpyac CLI
 # Select environment: hrds-dev | hrds-dev-apim | hrds-sit | hrds-sit-apim | hrds-preprod | hrds-prod

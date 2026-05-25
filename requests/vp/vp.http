@@ -24,7 +24,7 @@ client_id={{client_id}}&client_secret={{client_secret}}&scope={{scope}}&grant_ty
 ###
 
 # ─── Crime Prosecution Case Details ────────────────────────────────────────────
-# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details — v1.0.1
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-prosecution-case-details — v1.0.0
 
 # @name getCaseDetails
 ### GET Case Details by URN
@@ -35,7 +35,7 @@ Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 ###
 
 # ─── Court Schedule ─────────────────────────────────────────────────────────────
-# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule — v1.1.0
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-crime-schedulingandlisting-courtschedule — v0.4.0
 
 # @name getCourtSchedule
 ### Get court schedule by case URN
@@ -46,7 +46,7 @@ Ocp-Apim-Subscription-Key: {{vp_subscription_key}}
 ###
 
 # ─── Case ID Mapper ─────────────────────────────────────────────────────────────
-# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-caseadmin-case-urn-mapper — v1.0.9
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-caseadmin-case-urn-mapper — v1.0.1
 
 # @name getCaseIdByUrn
 ### GET Case ID by URN via Ingress
@@ -56,7 +56,7 @@ Authorization: Bearer {{vp_access_token}}
 ###
 
 # ─── Courthouses ────────────────────────────────────────────────────────────────
-# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-refdata-courthearing-courthouses — v1.1.0
+# Spec: https://app.swaggerhub.com/apis/HMCTS-DTS/api-cp-refdata-courthearing-courthouses — v0.7.0
 
 # @name getCourthouse
 ### Get courthouse by court ID
