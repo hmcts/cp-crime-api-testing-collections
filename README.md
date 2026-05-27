@@ -86,14 +86,39 @@ You are ready. Open `requests/vp/vp.http` or `requests/hrds/hrds.http` in your I
 
 ### Terminal (httpyac CLI)
 
+httpyac runs the collections directly from the terminal — no VS Code or IntelliJ required. It picks up both `http-client.env.json` and `http-client.private.env.json` automatically and handles `# @name` token chaining the same way the IDE extensions do.
+
+**1. Install**
+
 ```bash
 brew install httpyac
+```
 
+**2. Unlock credentials (once per machine)**
+
+```bash
+git-crypt unlock /path/to/amp.team.key
+```
+
+**3. Run requests**
+
+```bash
 # Run all requests in a file
-httpyac requests/vp/vp.http --env vp-dev --all
+httpyac requests/vp/vp.http --env vp-sit --all
+httpyac requests/hrds/hrds.http --env hrds-sit --all
 
 # Run a single named request
+httpyac requests/vp/vp.http --env vp-dev --name getToken
 httpyac requests/hrds/hrds.http --env hrds-sit --name getHrdsToken
+```
+
+**HRDS full end-to-end flow (run in order)**
+
+```bash
+httpyac requests/hrds/hrds.http --env hrds-sit --name getHrdsToken
+httpyac requests/hrds/hrds.http --env hrds-sit --name createSubscription
+httpyac requests/hrds/hrds.http --env hrds-sit --name createNotification
+httpyac requests/hrds/hrds.http --env hrds-sit --name getPdfDocument
 ```
 
 ---
